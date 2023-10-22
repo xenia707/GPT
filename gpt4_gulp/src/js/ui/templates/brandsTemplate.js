@@ -1,4 +1,4 @@
-export const createBrandsImage = ({ src, alt }) => {
+export const createBrandsImageTemplate = ({ src, alt }) => {
   return `
         <img class="brands_section__img" src="${src}" alt="${alt}" />      
     `;
@@ -6,7 +6,7 @@ export const createBrandsImage = ({ src, alt }) => {
 
 export const brandsTemplate = (brandsData) => {
   const brandsImagesTemplate = brandsData
-    .map((brandData) => createBrandsImage(brandData))
+    .map((brandData) => createBrandsImageTemplate(brandData))
     .join("");
 
   return brandsImagesTemplate;

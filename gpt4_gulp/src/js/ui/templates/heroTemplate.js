@@ -1,4 +1,4 @@
-export const createHeaderTemaplte = (header) => {
+export const createHeaderTemplate = (header) => {
   return `
     <h1 class="left__header">
       ${header}
@@ -6,7 +6,7 @@ export const createHeaderTemaplte = (header) => {
   `;
 };
 
-export const createDescriptionTemaplte = (description) => {
+export const createDescriptionTemplate = (description) => {
   return `
     <p class="left__description">
       ${description}
@@ -59,8 +59,8 @@ export const heroTemplate = ({
   header,
   description,
 }) => {
-  const headerTemplate = createHeaderTemaplte(header);
-  const descriptionTemplate = createDescriptionTemaplte(description);
+  const headerTemplate = createHeaderTemplate(header);
+  const descriptionTemplate = createDescriptionTemplate(description);
   const buttonsTemplate = createInputsTemplate(heroCtaButtons);
   const illustrationTemplate = createIllustrationTemplate(illustration);
 

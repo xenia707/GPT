@@ -2,7 +2,7 @@ const isBuild = process.argv.includes("--build");
 const webpackConfig = {
   mode: isBuild ? "production" : "development",
   entry: {
-    "script": "./src/js/script.js",
+    script: "./src/js/script.js",
     // '': './src/js/',
   },
   output: {

@@ -18,16 +18,20 @@ const initHomePage = (element) => {
 };
 
 const rootNode = document.querySelector("#root");
+// const rootNode2 = document.querySelector("#root2");
 
 const homePage = () => {
   // инициализация элементов Главной страницы
   initHomePage(rootNode);
+  // initHomePage(rootNode2);
 
   // инициализация шапки страницы с мок датой
-  initHeader();
+  initHeader(rootNode);
+  // initHeader(rootNode2);
 
   // инициализация хиро раздела
-  initHero();
+  initHero(rootNode);
+  // initHero(rootNode2);
 
   // инициализация хиро раздела
   initBrands();
@@ -37,6 +41,8 @@ const homePage = () => {
 
   // инициализация раздела "Будущее наступило" с мок датой
   initFutureHere();
+
+  
 
   // инициализация бургера для адаптивного меню
   initBurger();
