@@ -1,8 +1,10 @@
 import { useState } from "react";
-
+import useData from "../../hooks/useData";
 import Preloader from "../Preloader";
-import { useWhatIsChatGptContext } from "../../contexts/admin/WhatIsChatGpt";
-import usePostData from "../../hooks/usePostData";
+import {
+  useWhatIsChatGptContext,
+  usePostWhatIsChatGptContext,
+} from "../../contexts/admin/WhatIsChatGpt";
 
 const AdminwhatIsGptTop = ({ whatIsGptTopData }) => {
   const [headerData, setHeaderData] = useState(whatIsGptTopData.header);
@@ -148,26 +150,39 @@ const AdminWhatIsGptBottom = ({ whatIsGptBottomData }) => {
 };
 
 const AdminWhatIsChatGpt = () => {
-  const whatIsGptContext = useWhatIsChatGptContext();
+  const { isLoading, isError, error, data } = useData({
+    endpoint: "what-is-gpt",
+    options: {
+      method: "GET",
+    },
+  });
 
-  const {
-    postData: data,
-    isPostDataLoading: isLoading,
-    isPostDataError: isError,
-    postDataError: error,
-    isSuccess,
-    success,
-    postDataFunc,
-  } = usePostData({ endpoint: "what-is-gpt" });
+  const [isPostDataLoading, setIsPostDataLoading] = useState(false);
+  const [isPostDataError, setIsPostDataError] = useState(false);
+  const [postDataError, setPostDataError] = useState(null);
 
-  const handlePostData = (event) => {
-    event.preventDefault();
-    postDataFunc({ payload: whatIsGptContext });
+  const postData = usePostWhatIsChatGptContext();
+
+  const handlePostData = async () => {
+    try {
+      setIsPostDataLoading(true);
+      const { isPostDataError, postDataError } = await postData();
+      setIsPostDataError(isPostDataError);
+      setIsPostDataError(postDataError);
+    } catch (error) {
+      console.log(error);
+      setIsPostDataError(isPostDataError);
+      setPostDataError(postDataError);
+    }
+    setIsPostDataLoading(false);
   };
 
   if (isLoading) return <Preloader />;
   if (isError) return <div>{JSON.stringify(error)}</div>;
   if (!data) return <Preloader />;
+
+  // console.log("New data");
+  // console.log(data);
 
   return (
     <div className="admin_container admin_Hero">
@@ -175,15 +190,13 @@ const AdminWhatIsChatGpt = () => {
       <AdminwhatIsGptTop whatIsGptTopData={data.whatIsGptTopData} />
       <AdminWhatIsGptMiddle whatIsGptMiddleData={data.whatIsGptMiddleData} />
       <AdminWhatIsGptBottom whatIsGptBottomData={data.whatIsGptBottomData} />
-      {isLoading ? (
-        <Preloader />
-      ) : (
-        <button className="btn primary-btn" onClick={handlePostData}>
-          Сохранить
-        </button>
-      )}
+      <button className="btn primary-btn" onClick={handlePostData}>
+        {isPostDataLoading && <Preloader />} Сохранить
+      </button>
       {isError && <div className="error">{JSON.stringify(error)}</div>}
-      {isSuccess && <div className="success">{success}</div>}
+      {isPostDataError && (
+        <div className="error">{JSON.stringify(postDataError)}</div>
+      )}
     </div>
   );
 };

@@ -1,7 +1,10 @@
 import { useState } from "react";
+import useData from "../../hooks/useData";
 import Preloader from "../Preloader";
-import { useBrandsContext } from "../../contexts/admin/BrandsContext";
-import usePostData from "../../hooks/usePostData";
+import {
+  useBrandsContext,
+  usePostBrandsContext,
+} from "../../contexts/admin/BrandsContext";
 
 const AdminBrandsSetSingleItem = ({ item, index }) => {
   const [srcData, setSrcData] = useState(item.src);
@@ -44,40 +47,51 @@ const AdminBrandsSet = ({ brands }) => {
 };
 
 const AdminBrands = () => {
-  const brandsContext = useBrandsContext();
+  const { isLoading, isError, error, data } = useData({
+    endpoint: "brands",
+    options: {
+      method: "GET",
+    },
+  });
 
-  const {
-    postData: data,
-    isPostDataLoading: isLoading,
-    isPostDataError: isError,
-    postDataError: error,
-    isSuccess,
-    success,
-    postDataFunc,
-  } = usePostData({ endpoint: "brands" });
+  const [isPostDataLoading, setIsPostDataLoading] = useState(false);
+  const [isPostDataError, setIsPostDataError] = useState(false);
+  const [postDataError, setPostDataError] = useState(null);
 
-  const handlePostData = (event) => {
-    event.preventDefault();
-    postDataFunc({ payload: brandsContext });
+  const postData = usePostBrandsContext();
+
+  const handlePostData = async () => {
+    try {
+      setIsPostDataLoading(true);
+      const { isPostDataError, postDataError } = await postData();
+      setIsPostDataError(isPostDataError);
+      setIsPostDataError(postDataError);
+    } catch (error) {
+      console.log(error);
+      setIsPostDataError(isPostDataError);
+      setPostDataError(postDataError);
+    }
+    setIsPostDataLoading(false);
   };
 
   if (isLoading) return <Preloader />;
   if (isError) return <div>{JSON.stringify(error)}</div>;
   if (!data) return <Preloader />;
 
+  // console.log("New data");
+  // console.log(data);
+
   return (
     <div className="admin_container admin_Hero">
       <h2>Брэнды.</h2>
       <AdminBrandsSet brands={data} />
-      {isLoading ? (
-        <Preloader />
-      ) : (
-        <button className="btn primary-btn" onClick={handlePostData}>
-          Сохранить
-        </button>
-      )}
+      <button className="btn primary-btn" onClick={handlePostData}>
+        {isPostDataLoading && <Preloader />} Сохранить
+      </button>
       {isError && <div className="error">{JSON.stringify(error)}</div>}
-      {isSuccess && <div className="success">{success}</div>}
+      {isPostDataError && (
+        <div className="error">{JSON.stringify(postDataError)}</div>
+      )}
     </div>
   );
 };

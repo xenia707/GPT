@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import Preloader from "../Preloader";
 import { useHeaderContext } from "../../contexts/admin/HeaderContext";
 import usePostData from "../../hooks/usePostData";
@@ -13,6 +12,8 @@ const AdminLogoData = ({ logoData }) => {
   const handleAltData = (e) => {
     setAltData(e.target.value);
     headerContext.logoData.alt = e.target.value;
+    console.log("Header context");
+    console.log(headerContext);
   };
   const handleSrcData = (e) => {
     setSrcData(e.target.value);
@@ -22,6 +23,9 @@ const AdminLogoData = ({ logoData }) => {
     setHrefData(e.target.value);
     headerContext.logoData.href = e.target.value;
   };
+
+  // console.log("HeaderContext");
+  // console.log(useHeaderContext());
 
   return (
     <div className="admin_container__block">
@@ -80,6 +84,8 @@ const AdminMenuLink = ({ item }) => {
 };
 
 const AdminMenu = ({ menuData }) => {
+  // console.log("menuData");
+  // console.log(menuData);
   return (
     <div className="admin_container__block">
       <h3>Меню шапки:</h3>{" "}
@@ -110,6 +116,9 @@ const AdminButtonsSingleButton = ({ item, index }) => {
     setIsPrimaryData(e.target.value);
     headerContext.buttonsData[index].isPrimary = e.target.value;
   };
+
+  // console.log("HeaderContext");
+  // console.log(useHeaderContext());
 
   return (
     <div className="block__card">
@@ -145,26 +154,28 @@ const AdminButtons = ({ buttonsData }) => {
 };
 
 const AdminHeader = () => {
-  const headerContext = useHeaderContext();
-
   const {
-    postData: data,
     isPostDataLoading: isLoading,
     isPostDataError: isError,
     postDataError: error,
-    isSuccess,
+    postData: data,
     success,
+    isSuccess,
     postDataFunc,
-  } = usePostData({ endpoint: "header" });
+  } = usePostData({
+    endpoint: "header",
+  });
 
-  const handlePostData = (event) => {
-    event.preventDefault();
-    postDataFunc({ payload: headerContext });
+  const handlePostData = () => {
+    postDataFunc();
   };
 
   if (isLoading) return <Preloader />;
   if (isError) return <div>{JSON.stringify(error)}</div>;
   if (!data) return <Preloader />;
+
+  // console.log("New data");
+  // console.log(data);
 
   return (
     <div className="admin_container admin_header">
@@ -172,15 +183,11 @@ const AdminHeader = () => {
       <AdminLogoData logoData={data.logoData} />
       <AdminMenu menuData={data.menuData} />
       <AdminButtons buttonsData={data.buttonsData} />
-      {isLoading ? (
-        <Preloader />
-      ) : (
-        <button className="btn primary-btn" onClick={handlePostData}>
-          Сохранить
-        </button>
-      )}
+      <button className="btn primary-btn" onClick={handlePostData}>
+        {isLoading ? <Preloader /> : ""} Сохранить
+      </button>
       {isError && <div className="error">{JSON.stringify(error)}</div>}
-      {isSuccess && <div className="success">{success}</div>}
+      {isSuccess && <div className="error">{success}</div>}
     </div>
   );
 };

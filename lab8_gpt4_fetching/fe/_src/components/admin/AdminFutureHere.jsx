@@ -1,7 +1,10 @@
 import { useState } from "react";
+import useData from "../../hooks/useData";
 import Preloader from "../Preloader";
-import { useFutureHereContext } from "../../contexts/admin/FutureHereContext";
-import usePostData from "../../hooks/usePostData";
+import {
+  useFutureHereContext,
+  usePostFutureHereContext,
+} from "../../contexts/admin/FutureHereContext";
 
 const AdminButtonsSingleButton = ({ item, index }) => {
   const [titleData, setTitleData] = useState(item.title);
@@ -48,21 +51,31 @@ const AdminBullets = ({ futureHereData }) => {
 };
 
 const AdminFutureHere = () => {
-  const futureHereContext = useFutureHereContext();
+  const { isLoading, isError, error, data } = useData({
+    endpoint: "future-here",
+    options: {
+      method: "GET",
+    },
+  });
 
-  const {
-    postData: data,
-    isPostDataLoading: isLoading,
-    isPostDataError: isError,
-    postDataError: error,
-    isSuccess,
-    success,
-    postDataFunc,
-  } = usePostData({ endpoint: "future-here" });
+  const [isPostDataLoading, setIsPostDataLoading] = useState(false);
+  const [isPostDataError, setIsPostDataError] = useState(false);
+  const [postDataError, setPostDataError] = useState(null);
 
-  const handlePostData = (event) => {
-    event.preventDefault();
-    postDataFunc({ payload: futureHereContext });
+  const postData = usePostFutureHereContext();
+
+  const handlePostData = async () => {
+    try {
+      setIsPostDataLoading(true);
+      const { isPostDataError, postDataError } = await postData();
+      setIsPostDataError(isPostDataError);
+      setIsPostDataError(postDataError);
+    } catch (error) {
+      console.log(error);
+      setIsPostDataError(isPostDataError);
+      setPostDataError(postDataError);
+    }
+    setIsPostDataLoading(false);
   };
 
   if (isLoading) return <Preloader />;
@@ -75,16 +88,16 @@ const AdminFutureHere = () => {
   return (
     <div className="admin_container admin_Hero">
       <h2>Будущее уже наступило.</h2>
+      {/* <AdminHeroHeader header={data.header} description={data.description} /> */}
       <AdminBullets futureHereData={data} />
-      {isLoading ? (
-        <Preloader />
-      ) : (
-        <button className="btn primary-btn" onClick={handlePostData}>
-          Сохранить
-        </button>
-      )}
+      {/* <AdminIllustration illustration={data.illustration} /> */}
+      <button className="btn primary-btn" onClick={handlePostData}>
+        {isPostDataLoading && <Preloader />} Сохранить
+      </button>
       {isError && <div className="error">{JSON.stringify(error)}</div>}
-      {isSuccess && <div className="success">{success}</div>}
+      {isPostDataError && (
+        <div className="error">{JSON.stringify(postDataError)}</div>
+      )}
     </div>
   );
 };
