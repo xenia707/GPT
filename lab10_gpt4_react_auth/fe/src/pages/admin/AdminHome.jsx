@@ -8,7 +8,7 @@ import HeroContextProvider from "../../contexts/admin/HeroContext";
 import HeaderContextProvider from "../../contexts/admin/HeaderContext";
 import FutureHereContextProvider from "../../contexts/admin/FutureHereContext";
 import BrandsContextProvider from "../../contexts/admin/BrandsContext";
-import WhatIsChatGptContextProvider from "../../contexts/admin/WhatIsChatGpt";
+import WhatIsChatGptContextProvider from "../../contexts/admin/WhatIsChatGptContext";
 
 const AdminHome = () => {
   return (

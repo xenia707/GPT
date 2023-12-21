@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Preloader from "../Preloader";
-import { useWhatIsChatGptContext } from "../../contexts/admin/WhatIsChatGpt";
+import { useWhatIsChatGptContext } from "../../contexts/admin/WhatIsChatGptContext";
 import usePostData from "../../hooks/usePostData";
 
 const AdminwhatIsGptTop = ({ whatIsGptTopData }) => {
