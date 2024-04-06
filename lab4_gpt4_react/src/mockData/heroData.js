@@ -1,3 +1,5 @@
+import IllustrationSvg from "../assets/img/Illustration.svg";
+
 export const heroCtaButtons = [
   {
     type: "input",
@@ -10,7 +12,7 @@ export const heroCtaButtons = [
 ];
 
 export const illustration = {
-  src: "./assets/img/Illustration.svg",
+  src: IllustrationSvg,
   alt: "gpt3",
 };
 

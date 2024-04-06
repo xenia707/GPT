@@ -1,6 +1,6 @@
 import whatIsGptData from "../mockData/whatIsGptData";
 
-export const WhatIsGptTopTemplate = ({ whatIsGptTopData }) => {
+export const WhatIsGptTop = ({ whatIsGptTopData }) => {
   const { header, content } = whatIsGptTopData;
   return (
     <>
@@ -10,7 +10,7 @@ export const WhatIsGptTopTemplate = ({ whatIsGptTopData }) => {
   );
 };
 
-export const WhatIsGptMiddleTemplate = ({ whatIsGptMiddleData }) => {
+export const WhatIsGptMiddle = ({ whatIsGptMiddleData }) => {
   const {
     header,
     button: { href, title },
@@ -26,7 +26,7 @@ export const WhatIsGptMiddleTemplate = ({ whatIsGptMiddleData }) => {
   );
 };
 
-export const WhatIsGptContainerTemplate = ({ item }) => {
+export const WhatIsGptContainer = ({ item }) => {
   const { header, content } = item;
   return (
     <div className="bottom__container">
@@ -36,9 +36,9 @@ export const WhatIsGptContainerTemplate = ({ item }) => {
   );
 };
 
-export const WhatIsGptBottomTemplate = ({ whatIsGptBottomData }) => {
+export const WhatIsGptBottom = ({ whatIsGptBottomData }) => {
   return whatIsGptBottomData.map((item, index) => (
-    <WhatIsGptContainerTemplate key={index} item={item} />
+    <WhatIsGptContainer key={index} item={item} />
   ));
 };
 
@@ -49,13 +49,13 @@ const WhatIsChatGpt = () => {
   return (
     <>
       <div className="what_is_chatgpt_section__top">
-        <WhatIsGptTopTemplate whatIsGptTopData={whatIsGptTopData} />
+        <WhatIsGptTop whatIsGptTopData={whatIsGptTopData} />
       </div>
       <div className="what_is_chatgpt_section__middle">
-        <WhatIsGptMiddleTemplate whatIsGptMiddleData={whatIsGptMiddleData} />
+        <WhatIsGptMiddle whatIsGptMiddleData={whatIsGptMiddleData} />
       </div>
       <div className="what_is_chatgpt_section__bottom">
-        <WhatIsGptBottomTemplate whatIsGptBottomData={whatIsGptBottomData} />
+        <WhatIsGptBottom whatIsGptBottomData={whatIsGptBottomData} />
       </div>
     </>
   );

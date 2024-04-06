@@ -1,26 +1,23 @@
 import { useState, useEffect } from "react";
 
 import headerData from "../mockData/headerData";
-import Logo from "../assets/img/logo.svg";
 
 // блокируем и разблокируем скролл во время открытия модального окна
 const body = document.querySelector("body");
 const noOverflow = () => body.classList.add("oh");
 const overflow = () => body.classList.remove("oh");
 
-export const LogoTemplate = ({ logoData }) => {
-  const { alt, href } = logoData;
-
+export const Logo = ({ logoData: { alt, href, src } }) => {
   return (
     <div className="header__logo">
       <a href={href} className="logo__link">
-        <img className="link__name" src={Logo} alt={alt} />
+        <img className="link__name" src={src} alt={alt} />
       </a>
     </div>
   );
 };
 
-export const BurgerTemplate = ({ isBurgerActive, setIsMenuShown }) => (
+export const Burger = ({ isBurgerActive, setIsMenuShown }) => (
   <div
     className={
       isBurgerActive ? "header__burger_menu " : "header__burger_menu hidden"
@@ -36,9 +33,7 @@ export const BurgerTemplate = ({ isBurgerActive, setIsMenuShown }) => (
   </div>
 );
 
-export const MenuItemTemplate = ({ menuItemData }) => {
-  const { title, href } = menuItemData;
-
+export const MenuItem = ({ menuItemData: { title, href } }) => {
   return (
     <li className="menu__item">
       <a href={href} className="item__link">
@@ -48,8 +43,7 @@ export const MenuItemTemplate = ({ menuItemData }) => {
   );
 };
 
-export const ButtonTemplate = ({ buttonData }) => {
-  // console.log(buttonData);
+export const Button = ({ buttonData }) => {
   const { title, href, isPrimary } = buttonData;
 
   return (
@@ -64,7 +58,7 @@ export const ButtonTemplate = ({ buttonData }) => {
 };
 
 // функция создания шаблона с параметрами правой части меню
-export const RightHeaderTemplate = ({
+export const RightHeader = ({
   rightHeaderData,
   isBurgerActive,
   isMenuShown,
@@ -88,13 +82,13 @@ export const RightHeaderTemplate = ({
           </div>
           <ul className="menu">
             {menuData.map((item, index) => (
-              <MenuItemTemplate key={index} menuItemData={item} />
+              <MenuItem key={index} menuItemData={item} />
             ))}
           </ul>
         </aside>
         <div className="cta_buttons">
           {buttonsData.map((button, index) => (
-            <ButtonTemplate key={index} buttonData={button} />
+            <Button key={index} buttonData={button} />
           ))}
         </div>
       </div>
@@ -136,12 +130,9 @@ const Header = () => {
 
   return (
     <>
-      <LogoTemplate logoData={logoData} />
-      <BurgerTemplate
-        isBurgerActive={isBurgerActive}
-        setIsMenuShown={setIsMenuShown}
-      />
-      <RightHeaderTemplate
+      <Logo logoData={logoData} />
+      <Burger isBurgerActive={isBurgerActive} setIsMenuShown={setIsMenuShown} />
+      <RightHeader
         rightHeaderData={{ menuData, buttonsData }}
         isBurgerActive={isBurgerActive}
         isMenuShown={isMenuShown}

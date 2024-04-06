@@ -1,9 +1,7 @@
 import futureHereData from "../mockData/futureHereData";
 
-export const RightContainerTemplate = ({ item }) => {
+export const RightContainer = ({ item }) => {
   const { title, description } = item;
-
-  // console.log(item);
 
   return (
     <div className="right__container">
@@ -21,13 +19,13 @@ const FutureHere = () => {
           Будущее Уже Наступило и Тебе Нужно Лишь Осознать. Шагни в Будущее и
           Воплоти Его.
         </h2>
-        <a href="#" className="left__cta">
+        <a href="/future-here" className="left__cta">
           Запросить ранний доступ
         </a>
       </div>
       <div className="future_here__right">
         {futureHereData.map((item, index) => (
-          <RightContainerTemplate key={index} item={item} />
+          <RightContainer key={index} item={item} />
         ))}
       </div>
     </>

@@ -1,3 +1,5 @@
+import logoSvg from "../assets/img/logo.svg";
+
 export const menuData = [
   {
     title: "Главная",
@@ -36,7 +38,7 @@ export const buttonsData = [
 
 export const logoData = {
   alt: "logo",
-  src: "./assets/img/logo.svg",
+  src: logoSvg,
   href: "#",
 };
 
