@@ -1,17 +1,17 @@
 /* Подключение шрифтов */
 @font-face {
   font-family: "ManropeBold";
-  src: url(./assets/fonts/Manrope-Bold.ttf);
+  src: url(/public/assets/fonts/Manrope-Bold.ttf);
 }
 
 @font-face {
   font-family: "Manrope";
-  src: url(./assets/fonts/Manrope-Regular.ttf);
+  src: url(/public/assets/fonts/Manrope-Regular.ttf);
 }
 
 @font-face {
   font-family: "ManropeLight";
-  src: url(./assets/fonts/Manrope-Light.ttf);
+  src: url(/public/assets/fonts/Manrope-Light.ttf);
 }
 
 /* Сброс базовых стилей */
@@ -129,7 +129,8 @@ p {
 }
 
 .lined_header {
-  background: url("./assets/img/gradient_line.svg") no-repeat 0 0 transparent;
+  background: url("/public/assets/img/gradient_line.svg") no-repeat 0 0
+    transparent;
   padding: 1rem 0;
 }
 
@@ -342,7 +343,7 @@ p {
   padding: 3rem;
   margin: 6rem 0;
   row-gap: 7rem;
-  background: url(./assets/img/what_is_gpt_3_bg.svg) no-repeat 0 0 / cover;
+  background: url(/public/assets/img/what_is_gpt_3_bg.svg) no-repeat 0 0 / cover;
 }
 
 .what_is_chatgpt_section .what_is_chatgpt_section__top {
