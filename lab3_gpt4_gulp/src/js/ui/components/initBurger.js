@@ -1,8 +1,8 @@
-const initBurger = () => {
-  // ищем ноды (элементы DOM-дерева) для их получения и последующих манипуляций
-  const burgerNode = document.querySelector(".header__burger_menu");
-  const headerMenuNode = document.querySelector(".header__right");
-  const closeMenuNode = document.querySelector(".menu__close");
+const initBurger = (headerNode) => {
+  // ищем ноды (элементы DOM-дерева) в переданной ноде для их получения и последующих манипуляций
+  const burgerNode = headerNode.querySelector(".header__burger_menu");
+  const headerMenuNode = headerNode.querySelector(".header__right");
+  const closeMenuNode = headerNode.querySelector(".menu__close");
   const bodyNode = document.querySelector("body");
 
   // блокируем и разблокируем скролл во время открытия модального окна
@@ -31,7 +31,6 @@ const initBurger = () => {
   // обновляем состояние бургера при ресайзе окна
   const updateBurgerState = () => {
     const width = window.innerWidth;
-    // console.log("width: ", width);
 
     if (width <= 1024) return showBurger();
 

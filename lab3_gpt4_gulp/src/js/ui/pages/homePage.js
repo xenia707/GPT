@@ -5,7 +5,9 @@ import initWhatIsGpt from "./../components/initWhatIsGpt.js";
 import initFutureHere from "./../components/initFutureHere.js";
 import initBurger from "./../components/initBurger.js";
 
-const initHomePage = (element) => {
+const createHomePageTemplate = (rootNode) => {
+  // формируем шаблон базовых секций для дальнейшего монтирования в них
+  // соответствующих разделов
   const template = `
     <section class="section header"></section>
     <section class="section hero_section"></section>
@@ -14,38 +16,36 @@ const initHomePage = (element) => {
     <section class="section future_here"></section>
   `;
 
-  element.insertAdjacentHTML("beforeend", template);
+  rootNode.insertAdjacentHTML("beforeend", template); 
 };
 
-const rootNode = document.querySelector("#root");
-// const rootNode2 = document.querySelector("#root2");
-
 const homePage = () => {
-  // инициализация элементов Главной страницы
-  initHomePage(rootNode);
-  // initHomePage(rootNode2);
+  // инициализация элементов страницы
+  const rootNode = document.querySelector("#root");
+  createHomePageTemplate(rootNode);
 
   // инициализация шапки страницы с мок датой
-  initHeader(rootNode);
-  // initHeader(rootNode2);
+  const headerNode = rootNode.querySelector(".header");
+  initHeader(headerNode);
 
   // инициализация хиро раздела
-  initHero(rootNode);
-  // initHero(rootNode2);
+  const heroNode = rootNode.querySelector(".hero_section");
+  initHero(heroNode);
 
   // инициализация хиро раздела
-  initBrands();
+  const brandsNode = rootNode.querySelector(".brands_section");
+  initBrands(brandsNode);
 
   // инициализация хиро раздела
-  initWhatIsGpt();
+  const whatIsGptNode = rootNode.querySelector(".what_is_chatgpt_section");
+  initWhatIsGpt(whatIsGptNode);
 
   // инициализация раздела "Будущее наступило" с мок датой
-  initFutureHere();
-
-  
+  const futureHereNode = rootNode.querySelector(".future_here");
+  initFutureHere(futureHereNode);
 
   // инициализация бургера для адаптивного меню
-  initBurger();
+  initBurger(headerNode);
 };
 
 export default homePage;

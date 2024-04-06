@@ -1,12 +1,12 @@
 export const rightContainerTemplate = ({ title, description }) => {
   const template = `
     <div class="right__container">
-    <h3 class="container__header lined_header">
-        ${title}
-    </h3>
-    <p class="container__content">
-        ${description}
-    </p>
+      <h3 class="container__header lined_header">
+          ${title}
+      </h3>
+      <p class="container__content">
+          ${description}
+      </p>
     </div>
 `;
 
@@ -14,7 +14,6 @@ export const rightContainerTemplate = ({ title, description }) => {
 };
 
 export const futureHereTemplate = (data) => {
-  // console.log(data);
   const rightContainerTpl = data.map((item) => rightContainerTemplate(item));
 
   const parentTemplate = `
@@ -28,12 +27,7 @@ export const futureHereTemplate = (data) => {
     <div class="future_here__right">
 `;
 
-  const resultTemplate =
-    parentTemplate +
-    rightContainerTpl +
-    `
-     </div>
-    `;
+  const resultTemplate = parentTemplate + rightContainerTpl + `</div>`;
 
   return resultTemplate;
 };
