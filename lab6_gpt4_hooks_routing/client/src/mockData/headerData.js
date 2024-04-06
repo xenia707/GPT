@@ -1,28 +1,30 @@
+import logoSvg from "../assets/img/logo.svg";
+
 export const menuData = [
   {
-    type: "button",
+    type: "link",
     title: "Главная",
-    href: "#main",
+    href: "#",
   },
   {
     type: "button",
     title: "Что такое GPT?",
-    href: "#what_is",
+    href: "#",
   },
   {
     type: "button",
     title: "Open AI",
-    href: "#future",
+    href: "#",
   },
   {
     type: "link",
     title: "Кейсы",
-    href: "/cases",
+    href: "#",
   },
   {
-    type: "button",
+    type: "link",
     title: "Библиотека",
-    href: "/library",
+    href: "#",
   },
 ];
 
@@ -41,7 +43,7 @@ export const buttonsData = [
 
 export const logoData = {
   alt: "logo",
-  src: "./assets/img/logo.svg",
+  src: logoSvg,
   href: "#",
 };
 

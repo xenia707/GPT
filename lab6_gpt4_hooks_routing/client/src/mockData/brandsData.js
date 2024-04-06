@@ -1,23 +1,28 @@
+import googleSvg from "../assets/img/brands/google.svg";
+import slackSvg from "../assets/img/brands/slack.svg";
+import atlassianSvg from "../assets/img/brands/atlassian.svg";
+import dropboxSvg from "../assets/img/brands/dropbox.svg";
+import shopifySvg from "../assets/img/brands/shopify.svg";
+
 const brandsData = [
   {
-    src: "./assets/img/brands/google.svg",
-    // картинка подставляется по alt
+    src: googleSvg,
     alt: "google",
   },
   {
-    src: "./assets/img/brands/slack.svg",
+    src: slackSvg,
     alt: "slack",
   },
   {
-    src: "./assets/img/brands/atlassian.svg",
+    src: atlassianSvg,
     alt: "atlassian",
   },
   {
-    src: "./assets/img/brands/dropbox.svg",
+    src: dropboxSvg,
     alt: "dropbox",
   },
   {
-    src: "./assets/img/brands/shopify.svg",
+    src: shopifySvg,
     alt: "shopify",
   },
 ];

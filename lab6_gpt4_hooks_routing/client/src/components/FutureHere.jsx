@@ -1,5 +1,6 @@
 import useData from "../hooks/useData";
 import futureHereData from "../mockData/futureHereData";
+
 import Preloader from "./Preloader";
 
 export const RightContainerTemplate = ({ item }) => {
@@ -21,8 +22,19 @@ const FutureHere = () => {
     },
   });
 
+  if (isError) {
+    console.log("error");
+    console.log(error);
+  }
+
+  // if (!isLoading) {
+  //   console.log("!isLoading");
+  //   console.log("data");
+  //   console.log(data);
+  // }
+
   if (isLoading) return <Preloader />;
-  if (isError) return <div>{JSON.stringify(error)}</div>;
+  const renderedData = data || futureHereData;
 
   return (
     <>
@@ -36,7 +48,7 @@ const FutureHere = () => {
         </a>
       </div>
       <div className="future_here__right">
-        {(data ? data : futureHereData).map((item, index) => (
+        {renderedData.map((item, index) => (
           <RightContainerTemplate key={index} item={item} />
         ))}
       </div>

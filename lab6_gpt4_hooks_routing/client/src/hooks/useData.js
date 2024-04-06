@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+const defaultUrl = "http://localhost:5000/api/cms/";
+
 const controller = new AbortController();
 const signal = controller.signal;
 
@@ -11,13 +13,13 @@ const useData = ({ endpoint, options }) => {
   const fetchOptions = useRef(options);
 
   useEffect(() => {
-    const url = `${process.env.REACT_APP_API_URL}${endpoint}`;
+    const url = `${process.env.REACT_APP_API_URL ?? defaultUrl}${endpoint}`;
 
     const fetchData = async () => {
       setIsLoading(true);
 
       try {
-        const response = await fetch(url, fetchOptions.current, signal);
+        const response = await fetch(url, fetchOptions.current, { signal });
 
         const jsonData = await response.json();
 
