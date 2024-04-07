@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 
 import useData from "./useData";
 
+const controller = new AbortController();
+const signal = controller.signal;
+
 const options = {
   method: "POST",
   headers: {
@@ -10,14 +13,6 @@ const options = {
 };
 
 const usePostData = ({ endpoint }) => {
-  console.log("usePostData hook triggered");
-  const [postData, setPostData] = useState(null);
-  const [isPostDataLoading, setIsPostDataLoading] = useState(false);
-  const [isPostDataError, setIsPostDataError] = useState(false);
-  const [postDataError, setPostDataError] = useState(null);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [success, setSuccess] = useState(null);
-
   const { isLoading, isError, error, data } = useData({
     endpoint: endpoint,
     options: {
@@ -25,62 +20,76 @@ const usePostData = ({ endpoint }) => {
     },
   });
 
+  const [postData, setPostData] = useState(data);
+  // используем статусную модель для индикации состояния получения данных:
+  // 'idle', 'success', 'error', 'loading'
+  const [status, setStatus] = useState("idle");
+  // для статусной модели при ошибке, указываем в statusDescription детали ошибки
+  // для успешного запроса указываем ответ сервера
+  // в человекопонятной форме
+  const [statusDescription, setStatusDescription] = useState("");
+
+  // добавляем сайд эффекты для связи загрузки данных с бэкенда
+  // через хук useData
   useEffect(() => {
-    setIsPostDataError(isError);
-    setPostDataError(error);
-    setIsPostDataLoading(isLoading);
+    setStatus("success");
+    setStatusDescription(null);
     setPostData(data);
-    console.log("data set");
-    console.log(data);
-  }, [isError, error, isLoading, data]);
+  }, [data]);
 
-  // useEffect(() => {
-  //   setPostData(data);
-  // }, [data]);
+  useEffect(() => {
+    if (isLoading) {
+      setStatus("loading");
+      setStatusDescription("Идет загрузка");
+    }
+  }, [isLoading]);
 
-  // useEffect(() => {
-  //   setIsPostDataLoading(isLoading);
-  // }, [isLoading]);
+  useEffect(() => {
+    if (isError) {
+      setStatus("error");
+      setStatusDescription(error);
+    }
+  }, [isError, error]);
+
+  const url = process.env.REACT_APP_API_URL + endpoint;
 
   const postDataFunc = async ({ payload }) => {
     options.body = JSON.stringify(payload);
 
-    const url = process.env.REACT_APP_API_URL + endpoint;
-
     try {
-      setIsPostDataLoading(true);
-      const response = await fetch(url, options);
+      setStatus("loading");
+      // setPostData(payload);
+
+      const response = await fetch(url, options, { signal });
 
       if (!response.ok) {
-        setIsSuccess(false);
-        setIsPostDataError(true);
-        setPostDataError("Response is not ok");
+        setStatus("error");
+        setStatusDescription("Что-то пошло не так");
       }
 
       const jsonData = await response.json();
+
       console.log("jsonData");
       console.log(jsonData);
-      setIsSuccess(true);
-      setSuccess(jsonData.message);
-
-      // setIsPostDataError(isPostDataError);
-      // setPostDataError(postDataError);
+      setStatus("success");
+      setStatusDescription(jsonData.message || "Данные сохранены");
     } catch (error) {
       console.log(error);
-      setIsPostDataError(true);
-      setPostDataError(error.message);
+      setStatus("error");
+      setStatusDescription(error);
+
+      if (error.message === "Failed to fetch") {
+        setStatusDescription("Сервер не отвечает");
+      } else {
+        setStatusDescription(error.message);
+      }
     }
-    setPostData(payload);
-    setIsPostDataLoading(false);
   };
 
   return {
     postData,
-    isPostDataLoading,
-    isPostDataError,
-    postDataError,
-    isSuccess,
-    success,
+    status,
+    statusDescription,
     postDataFunc,
   };
 };

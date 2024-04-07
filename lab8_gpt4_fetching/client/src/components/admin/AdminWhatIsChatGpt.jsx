@@ -152,22 +152,23 @@ const AdminWhatIsChatGpt = () => {
 
   const {
     postData: data,
-    isPostDataLoading: isLoading,
-    isPostDataError: isError,
-    postDataError: error,
-    isSuccess,
-    success,
+    status,
+    statusDescription,
     postDataFunc,
   } = usePostData({ endpoint: "what-is-gpt" });
 
-  const handlePostData = (event) => {
-    event.preventDefault();
+  const handlePostData = (e) => {
+    e.preventDefault();
     postDataFunc({ payload: whatIsGptContext });
   };
 
-  if (isLoading) return <Preloader />;
-  if (isError) return <div>{JSON.stringify(error)}</div>;
-  if (!data) return <Preloader />;
+  if (status === "loading") return <Preloader />;
+  if (!data)
+    return (
+      <div>
+        <h3>Данные не загружены</h3>
+      </div>
+    );
 
   return (
     <div className="admin_container admin_Hero">
@@ -175,15 +176,16 @@ const AdminWhatIsChatGpt = () => {
       <AdminwhatIsGptTop whatIsGptTopData={data.whatIsGptTopData} />
       <AdminWhatIsGptMiddle whatIsGptMiddleData={data.whatIsGptMiddleData} />
       <AdminWhatIsGptBottom whatIsGptBottomData={data.whatIsGptBottomData} />
-      {isLoading ? (
+      {status === "loading" ? (
         <Preloader />
       ) : (
         <button className="btn primary-btn" onClick={handlePostData}>
           Сохранить
         </button>
       )}
-      {isError && <div className="error">{JSON.stringify(error)}</div>}
-      {isSuccess && <div className="success">{success}</div>}
+      {statusDescription && (
+        <div className="error">{JSON.stringify(statusDescription)}</div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import Preloader from "../Preloader";
 import { useFutureHereContext } from "../../contexts/admin/FutureHereContext";
 import usePostData from "../../hooks/usePostData";
@@ -52,39 +53,38 @@ const AdminFutureHere = () => {
 
   const {
     postData: data,
-    isPostDataLoading: isLoading,
-    isPostDataError: isError,
-    postDataError: error,
-    isSuccess,
-    success,
+    status,
+    statusDescription,
     postDataFunc,
   } = usePostData({ endpoint: "future-here" });
 
-  const handlePostData = (event) => {
-    event.preventDefault();
+  const handlePostData = (e) => {
+    e.preventDefault();
     postDataFunc({ payload: futureHereContext });
   };
 
-  if (isLoading) return <Preloader />;
-  if (isError) return <div>{JSON.stringify(error)}</div>;
-  if (!data) return <Preloader />;
-
-  console.log("New data");
-  console.log(data);
+  if (status === "loading") return <Preloader />;
+  if (!data)
+    return (
+      <div>
+        <h3>Данные не загружены</h3>
+      </div>
+    );
 
   return (
     <div className="admin_container admin_Hero">
       <h2>Будущее уже наступило.</h2>
       <AdminBullets futureHereData={data} />
-      {isLoading ? (
+      {status === "loading" ? (
         <Preloader />
       ) : (
         <button className="btn primary-btn" onClick={handlePostData}>
           Сохранить
         </button>
       )}
-      {isError && <div className="error">{JSON.stringify(error)}</div>}
-      {isSuccess && <div className="success">{success}</div>}
+      {statusDescription && (
+        <div className="error">{JSON.stringify(statusDescription)}</div>
+      )}
     </div>
   );
 };

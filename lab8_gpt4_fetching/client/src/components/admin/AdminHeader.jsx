@@ -149,22 +149,23 @@ const AdminHeader = () => {
 
   const {
     postData: data,
-    isPostDataLoading: isLoading,
-    isPostDataError: isError,
-    postDataError: error,
-    isSuccess,
-    success,
+    status,
+    statusDescription,
     postDataFunc,
   } = usePostData({ endpoint: "header" });
 
-  const handlePostData = (event) => {
-    event.preventDefault();
+  const handlePostData = (e) => {
+    e.preventDefault();
     postDataFunc({ payload: headerContext });
   };
 
-  if (isLoading) return <Preloader />;
-  if (isError) return <div>{JSON.stringify(error)}</div>;
-  if (!data) return <Preloader />;
+  if (status === "loading") return <Preloader />;
+  if (!data)
+    return (
+      <div>
+        <h3>Данные не загружены</h3>
+      </div>
+    );
 
   return (
     <div className="admin_container admin_header">
@@ -172,15 +173,16 @@ const AdminHeader = () => {
       <AdminLogoData logoData={data.logoData} />
       <AdminMenu menuData={data.menuData} />
       <AdminButtons buttonsData={data.buttonsData} />
-      {isLoading ? (
+      {status === "loading" ? (
         <Preloader />
       ) : (
         <button className="btn primary-btn" onClick={handlePostData}>
           Сохранить
         </button>
       )}
-      {isError && <div className="error">{JSON.stringify(error)}</div>}
-      {isSuccess && <div className="success">{success}</div>}
+      {statusDescription && (
+        <div className="error">{JSON.stringify(statusDescription)}</div>
+      )}
     </div>
   );
 };

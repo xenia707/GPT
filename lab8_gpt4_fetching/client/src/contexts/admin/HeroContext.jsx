@@ -1,5 +1,5 @@
 import { createContext, useContext, useRef, useState } from "react";
-import heroData from "../../mockData/heroData";
+import { heroData } from "../../mockData/heroData";
 
 // настройки для запроса
 const controller = new AbortController();
