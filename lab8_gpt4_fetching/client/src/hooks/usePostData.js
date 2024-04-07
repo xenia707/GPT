@@ -58,7 +58,7 @@ const usePostData = ({ endpoint }) => {
 
     try {
       setStatus("loading");
-      // setPostData(payload);
+      setPostData(payload);
 
       const response = await fetch(url, options, { signal });
 

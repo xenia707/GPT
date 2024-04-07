@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import Preloader from "../Preloader";
 import { useHeaderContext } from "../../contexts/admin/HeaderContext";
@@ -154,6 +155,10 @@ const AdminHeader = () => {
     postDataFunc,
   } = usePostData({ endpoint: "header" });
 
+  useEffect(() => {
+    if (status === "success" || status === "error") toast(statusDescription);
+  }, [status, statusDescription]);
+
   const handlePostData = (e) => {
     e.preventDefault();
     postDataFunc({ payload: headerContext });
@@ -173,16 +178,9 @@ const AdminHeader = () => {
       <AdminLogoData logoData={data.logoData} />
       <AdminMenu menuData={data.menuData} />
       <AdminButtons buttonsData={data.buttonsData} />
-      {status === "loading" ? (
-        <Preloader />
-      ) : (
-        <button className="btn primary-btn" onClick={handlePostData}>
-          Сохранить
-        </button>
-      )}
-      {statusDescription && (
-        <div className="error">{JSON.stringify(statusDescription)}</div>
-      )}
+      <button className="btn primary-btn" onClick={handlePostData}>
+        Сохранить
+      </button>
     </div>
   );
 };

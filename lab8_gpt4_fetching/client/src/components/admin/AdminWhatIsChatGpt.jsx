@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import Preloader from "../Preloader";
 import { useWhatIsChatGptContext } from "../../contexts/admin/WhatIsChatGpt";
@@ -157,6 +158,10 @@ const AdminWhatIsChatGpt = () => {
     postDataFunc,
   } = usePostData({ endpoint: "what-is-gpt" });
 
+  useEffect(() => {
+    if (status === "success" || status === "error") toast(statusDescription);
+  }, [status, statusDescription]);
+
   const handlePostData = (e) => {
     e.preventDefault();
     postDataFunc({ payload: whatIsGptContext });
@@ -176,16 +181,9 @@ const AdminWhatIsChatGpt = () => {
       <AdminwhatIsGptTop whatIsGptTopData={data.whatIsGptTopData} />
       <AdminWhatIsGptMiddle whatIsGptMiddleData={data.whatIsGptMiddleData} />
       <AdminWhatIsGptBottom whatIsGptBottomData={data.whatIsGptBottomData} />
-      {status === "loading" ? (
-        <Preloader />
-      ) : (
-        <button className="btn primary-btn" onClick={handlePostData}>
-          Сохранить
-        </button>
-      )}
-      {statusDescription && (
-        <div className="error">{JSON.stringify(statusDescription)}</div>
-      )}
+      <button className="btn primary-btn" onClick={handlePostData}>
+        Сохранить
+      </button>
     </div>
   );
 };

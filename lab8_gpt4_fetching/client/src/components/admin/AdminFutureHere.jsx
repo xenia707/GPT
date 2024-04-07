@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import Preloader from "../Preloader";
 import { useFutureHereContext } from "../../contexts/admin/FutureHereContext";
@@ -58,6 +59,10 @@ const AdminFutureHere = () => {
     postDataFunc,
   } = usePostData({ endpoint: "future-here" });
 
+  useEffect(() => {
+    if (status === "success" || status === "error") toast(statusDescription);
+  }, [status, statusDescription]);
+
   const handlePostData = (e) => {
     e.preventDefault();
     postDataFunc({ payload: futureHereContext });
@@ -75,16 +80,9 @@ const AdminFutureHere = () => {
     <div className="admin_container admin_Hero">
       <h2>Будущее уже наступило.</h2>
       <AdminBullets futureHereData={data} />
-      {status === "loading" ? (
-        <Preloader />
-      ) : (
-        <button className="btn primary-btn" onClick={handlePostData}>
-          Сохранить
-        </button>
-      )}
-      {statusDescription && (
-        <div className="error">{JSON.stringify(statusDescription)}</div>
-      )}
+      <button className="btn primary-btn" onClick={handlePostData}>
+        Сохранить
+      </button>
     </div>
   );
 };

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import Preloader from "../Preloader";
 import { useHeroContext } from "../../contexts/admin/HeroContext";
@@ -134,6 +135,10 @@ const AdminHero = () => {
     postDataFunc,
   } = usePostData({ endpoint: "hero" });
 
+  useEffect(() => {
+    if (status === "success" || status === "error") toast(statusDescription);
+  }, [status, statusDescription]);
+
   const handlePostData = (e) => {
     e.preventDefault();
     postDataFunc({ payload: heroContext });
@@ -153,16 +158,9 @@ const AdminHero = () => {
       <AdminHeroHeader header={data.header} description={data.description} />
       <AdminButtons heroCtaButtons={data.heroCtaButtons} />
       <AdminIllustration illustration={data.illustration} />
-      {status === "loading" ? (
-        <Preloader />
-      ) : (
-        <button className="btn primary-btn" onClick={handlePostData}>
-          Сохранить
-        </button>
-      )}
-      {statusDescription && (
-        <div className="error">{JSON.stringify(statusDescription)}</div>
-      )}
+      <button className="btn primary-btn" onClick={handlePostData}>
+        Сохранить
+      </button>
     </div>
   );
 };

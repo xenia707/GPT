@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import Preloader from "../Preloader";
 import { useBrandsContext } from "../../contexts/admin/BrandsContext";
@@ -54,13 +55,14 @@ const AdminBrands = () => {
     postDataFunc,
   } = usePostData({ endpoint: "brands" });
 
+  useEffect(() => {
+    if (status === "success" || status === "error") toast(statusDescription);
+  }, [status, statusDescription]);
+
   const handlePostData = (e) => {
     e.preventDefault();
     postDataFunc({ payload: brandsContext });
   };
-
-  // console.log("status:");
-  // console.log(status);
 
   if (status === "loading") return <Preloader />;
   if (!data)
@@ -74,16 +76,9 @@ const AdminBrands = () => {
     <div className="admin_container admin_Hero">
       <h2>Брэнды.</h2>
       <AdminBrandsSet brands={data} />
-      {status === "loading" ? (
-        <Preloader />
-      ) : (
-        <button className="btn primary-btn" onClick={handlePostData}>
-          Сохранить
-        </button>
-      )}
-      {statusDescription && (
-        <div className="error">{JSON.stringify(statusDescription)}</div>
-      )}
+      <button className="btn primary-btn" onClick={handlePostData}>
+        Сохранить
+      </button>
     </div>
   );
 };
