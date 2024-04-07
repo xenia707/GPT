@@ -10,7 +10,7 @@ export const heroCtaButtons = [
 ];
 
 export const illustration = {
-  src: "/public/assets/img/Illustration.svg",
+  src: "./assets/img/Illustration.svg",
   alt: "gpt3",
 };
 

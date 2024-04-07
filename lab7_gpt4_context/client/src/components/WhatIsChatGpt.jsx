@@ -2,8 +2,7 @@ import useData from "../hooks/useData";
 import whatIsGptData from "../mockData/whatIsGptData";
 import Preloader from "./Preloader";
 
-export const WhatIsGptTopTemplate = ({ whatIsGptTopData }) => {
-  const { header, content } = whatIsGptTopData;
+export const WhatIsGptTop = ({ whatIsGptTopData: { header, content } }) => {
   return (
     <>
       <h3 className="top__header lined_header">{header}</h3>
@@ -12,7 +11,7 @@ export const WhatIsGptTopTemplate = ({ whatIsGptTopData }) => {
   );
 };
 
-export const WhatIsGptMiddleTemplate = ({ whatIsGptMiddleData }) => {
+export const WhatIsGptMiddle = ({ whatIsGptMiddleData }) => {
   const {
     header,
     button: { href, title },
@@ -28,7 +27,7 @@ export const WhatIsGptMiddleTemplate = ({ whatIsGptMiddleData }) => {
   );
 };
 
-export const WhatIsGptContainerTemplate = ({ item }) => {
+export const WhatIsGptContainer = ({ item }) => {
   const { header, content } = item;
   return (
     <div className="bottom__container">
@@ -38,16 +37,13 @@ export const WhatIsGptContainerTemplate = ({ item }) => {
   );
 };
 
-export const WhatIsGptBottomTemplate = ({ whatIsGptBottomData }) => {
+export const WhatIsGptBottom = ({ whatIsGptBottomData }) => {
   return whatIsGptBottomData.map((item, index) => (
-    <WhatIsGptContainerTemplate key={index} item={item} />
+    <WhatIsGptContainer key={index} item={item} />
   ));
 };
 
 const WhatIsChatGpt = () => {
-  const { whatIsGptTopData, whatIsGptMiddleData, whatIsGptBottomData } =
-    whatIsGptData;
-
   const { isLoading, isError, error, data } = useData({
     endpoint: "what-is-gpt",
     options: {
@@ -55,35 +51,32 @@ const WhatIsChatGpt = () => {
     },
   });
 
+  if (isError) {
+    console.log("error");
+    console.log(error);
+  }
+
+  // if (!isLoading) {
+  //   console.log("!isLoading");
+  //   console.log("data");
+  //   console.log(data);
+  // }
+
   if (isLoading) return <Preloader />;
-  if (isError) return <div>{JSON.stringify(error)}</div>;
+  const renderedData = data || whatIsGptData;
+  const { whatIsGptTopData, whatIsGptMiddleData, whatIsGptBottomData } =
+    renderedData;
 
   return (
     <>
       <div className="what_is_chatgpt_section__top">
-        <WhatIsGptTopTemplate
-          whatIsGptTopData={
-            data?.whatIsGptTopData ? data.whatIsGptTopData : whatIsGptTopData
-          }
-        />
+        <WhatIsGptTop whatIsGptTopData={whatIsGptTopData} />
       </div>
       <div className="what_is_chatgpt_section__middle">
-        <WhatIsGptMiddleTemplate
-          whatIsGptMiddleData={
-            data?.whatIsGptMiddleData
-              ? data.whatIsGptMiddleData
-              : whatIsGptMiddleData
-          }
-        />
+        <WhatIsGptMiddle whatIsGptMiddleData={whatIsGptMiddleData} />
       </div>
       <div className="what_is_chatgpt_section__bottom">
-        <WhatIsGptBottomTemplate
-          whatIsGptBottomData={
-            data?.whatIsGptBottomData
-              ? data.whatIsGptBottomData
-              : whatIsGptBottomData
-          }
-        />
+        <WhatIsGptBottom whatIsGptBottomData={whatIsGptBottomData} />
       </div>
     </>
   );

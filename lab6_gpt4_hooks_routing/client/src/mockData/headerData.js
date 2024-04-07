@@ -41,7 +41,7 @@ export const buttonsData = [
 
 export const logoData = {
   alt: "logo",
-  src: "/public/assets/img/logo.svg",
+  src: "./assets/img/logo.svg",
   href: "#",
 };
 

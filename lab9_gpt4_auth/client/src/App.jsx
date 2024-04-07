@@ -7,6 +7,10 @@ import Library from "./pages/Library";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminHome from "./pages/admin/AdminHome";
 
+if (!process.env.REACT_APP_API_URL) {
+  console.log("Похоже не используется .env");
+}
+
 const router = createBrowserRouter([
   {
     path: "/",

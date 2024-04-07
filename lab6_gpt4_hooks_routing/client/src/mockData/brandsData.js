@@ -1,22 +1,22 @@
 const brandsData = [
   {
-    src: "/public/assets/img/brands/google.svg",
+    src: "./assets/img/brands/google.svg",
     alt: "google",
   },
   {
-    src: "/public/assets/img/brands/slack.svg",
+    src: "./assets/img/brands/slack.svg",
     alt: "slack",
   },
   {
-    src: "/public/assets/img/brands/atlassian.svg",
+    src: "./assets/img/brands/atlassian.svg",
     alt: "atlassian",
   },
   {
-    src: "/public/assets/img/brands/dropbox.svg",
+    src: "./assets/img/brands/dropbox.svg",
     alt: "dropbox",
   },
   {
-    src: "/public/assets/img/brands/shopify.svg",
+    src: "./assets/img/brands/shopify.svg",
     alt: "shopify",
   },
 ];

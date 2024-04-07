@@ -1,5 +1,9 @@
 {
-  "logoData": { "alt": "logo1", "src": "./assets/img/logo.svg", "href": "#" },
+  "logoData": {
+    "alt": "logo1",
+    "src": "./assets/img/logo.svg",
+    "href": "#"
+  },
   "menuData": [
     { "type": "button", "title": "Главная", "href": "#hero" },
     { "type": "button", "title": "Что такое GPT?", "href": "#what-is" },

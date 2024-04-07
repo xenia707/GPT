@@ -1,19 +1,17 @@
-import heroData from "../mockData/heroData";
-import IllustrationSvg from "../assets/img/Illustration.svg";
+import { heroData } from "../mockData/heroData";
+
 import useData from "../hooks/useData";
 import Preloader from "./Preloader";
 
-export const HeaderTemplate = ({ header }) => {
+export const Header = ({ header }) => {
   return <h1 className="left__header">{header}</h1>;
 };
 
-export const DescriptionTemplate = ({ description }) => {
+export const Description = ({ description }) => {
   return <p className="left__description">{description}</p>;
 };
 
-export const ButtonTemplate = ({ ctaButton }) => {
-  const { type, title } = ctaButton;
-
+export const Button = ({ ctaButton: { type, title } }) => {
   switch (type) {
     case "input":
       return <input type="text" placeholder={title} />;
@@ -24,29 +22,27 @@ export const ButtonTemplate = ({ ctaButton }) => {
       );
 
     default:
-      return ``;
+      return null;
   }
 };
 
-export const ButtonsTemplate = ({ ctaButtons }) => {
+export const Buttons = ({ ctaButtons }) => {
   return (
     <div className="left__cta_buttons">
       {ctaButtons.map((ctaButton, index) => (
-        <ButtonTemplate key={index} ctaButton={ctaButton} />
+        <Button key={index} ctaButton={ctaButton} />
       ))}
     </div>
   );
 };
 
-export const IllustrationTemplate = ({ illustration }) => {
-  const { alt } = illustration;
+export const Illustration = ({ illustration }) => {
+  const { alt, src } = illustration;
 
-  return <img src={IllustrationSvg} alt={alt} />;
+  return <img src={src} alt={alt} />;
 };
 
 const Hero = () => {
-  const { header, description, illustration, heroCtaButtons } = heroData;
-
   const { isLoading, isError, error, data } = useData({
     endpoint: "hero",
     options: {
@@ -54,26 +50,30 @@ const Hero = () => {
     },
   });
 
+  if (isError) {
+    console.log("error");
+    console.log(error);
+  }
+
+  // if (!isLoading) {
+  //   console.log("!isLoading");
+  //   console.log("data");
+  //   console.log(data);
+  // }
+
   if (isLoading) return <Preloader />;
-  if (isError) return <div>{JSON.stringify(error)}</div>;
+  const renderedData = data || heroData;
+  const { header, description, illustration, heroCtaButtons } = renderedData;
 
   return (
     <>
       <div className="hero_section__left">
-        <HeaderTemplate header={data?.header ? data.header : header} />
-        <DescriptionTemplate
-          description={data?.description ? data.description : description}
-        />
-        <ButtonsTemplate
-          ctaButtons={
-            data?.heroCtaButtons ? data.heroCtaButtons : heroCtaButtons
-          }
-        />
+        <Header header={header} />
+        <Description description={description} />
+        <Buttons ctaButtons={heroCtaButtons} />
       </div>
       <div className="hero_section__right">
-        <IllustrationTemplate
-          illustration={data?.illustration ? data.illustration : illustration}
-        />
+        <Illustration illustration={illustration} />
       </div>
     </>
   );

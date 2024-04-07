@@ -5,5 +5,8 @@
     { "type": "input", "title": "__Введите Email" },
     { "type": "button", "title": "Начать" }
   ],
-  "illustration": { "src": "./assets/img/Illustration.svg", "alt": "gpt3" }
+  "illustration": {
+    "src": "./assets/img/Illustration.svg",
+    "alt": "gpt3"
+  }
 }

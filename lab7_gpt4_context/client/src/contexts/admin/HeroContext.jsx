@@ -1,5 +1,5 @@
 import { createContext, useContext, useRef } from "react";
-import heroData from "../../mockData/heroData";
+import { heroData } from "../../mockData/heroData";
 
 const HeroContext = createContext();
 const PostHeroContext = createContext();

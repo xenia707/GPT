@@ -19,11 +19,9 @@ export const header = "Построим Что-нибудь Невероятно
 export const description =
   "Однако кровать для помощи в путешествии неприятна. Не мысли все осуществляют благословение. Снисхождение ко всему, радость, изменение бурной привязанности. Вечеринку мы лет на заказ разрешил";
 
-const heroData = {
+export const heroData = {
   header,
   description,
   heroCtaButtons,
   illustration,
 };
-
-export default heroData;

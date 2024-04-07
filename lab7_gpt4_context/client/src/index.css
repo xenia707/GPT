@@ -1,17 +1,17 @@
 /* Подключение шрифтов */
 @font-face {
   font-family: "ManropeBold";
-  src: url(./assets/fonts/Manrope-Bold.ttf);
+  src: url(/public/assets/fonts/Manrope-Bold.ttf);
 }
 
 @font-face {
   font-family: "Manrope";
-  src: url(./assets/fonts/Manrope-Regular.ttf);
+  src: url(/public/assets/fonts/Manrope-Regular.ttf);
 }
 
 @font-face {
   font-family: "ManropeLight";
-  src: url(./assets/fonts/Manrope-Light.ttf);
+  src: url(/public/assets/fonts/Manrope-Light.ttf);
 }
 
 /* Сброс базовых стилей */
@@ -41,11 +41,6 @@ body.oh {
   flex-direction: column;
   align-items: center;
   width: 100%;
-}
-
-#root .dark a,
-#root .dark button {
-  color: green !important;
 }
 
 a {
@@ -134,7 +129,8 @@ p {
 }
 
 .lined_header {
-  background: url("./assets/img/gradient_line.svg") no-repeat 0 0 transparent;
+  background: url("/public/assets/img/gradient_line.svg") no-repeat 0 0
+    transparent;
   padding: 1rem 0;
 }
 
@@ -347,7 +343,7 @@ p {
   padding: 3rem;
   margin: 6rem 0;
   row-gap: 7rem;
-  background: url(./assets/img/what_is_gpt_3_bg.svg) no-repeat 0 0 / cover;
+  background: url(/public/assets/img/what_is_gpt_3_bg.svg) no-repeat 0 0 / cover;
 }
 
 .what_is_chatgpt_section .what_is_chatgpt_section__top {
@@ -719,81 +715,4 @@ p {
   .future_here .future_here__right {
     row-gap: 2rem;
   }
-}
-
-/* Админ стили */
-.admin_container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  row-gap: 2.5rem;
-  padding: 4rem 20px 0 20px;
-  margin-bottom: 120px;
-}
-
-.admin_container label {
-  color: #fff;
-}
-
-.admin_container input {
-  padding: 8px 12px;
-}
-
-.admin_container .admin_container__block {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  row-gap: 1rem;
-  column-gap: 1rem;
-}
-
-.admin_container .admin_container__block h2 {
-  font-size: 24px;
-}
-
-.admin_container .admin_container__block .btn {
-  align-self: flex-start;
-}
-
-.admin_container .admin_container__block .primary_btn {
-  font-size: 24px;
-}
-
-.admin_container .admin_container__block h3 {
-  font-size: 18px;
-}
-
-.admin_container .admin_container__block .block__card {
-  display: flex;
-  column-gap: 1rem;
-  row-gap: 1rem;
-  padding-left: 1rem;
-}
-
-.admin_container .admin_container__block .block__item {
-  display: flex;
-  column-gap: 1rem;
-  row-gap: 1rem;
-  padding-left: 1rem;
-  justify-content: center;
-  align-items: center;
-}
-
-.admin_container .admin_container__block .block__item .item__long_input {
-  min-width: 512px;
-}
-
-.admin_container .admin_container__block .block__card .block__item {
-  display: flex;
-  flex-direction: column;
-  column-gap: 0.5rem;
-  row-gap: 0.5rem;
-  padding-left: 1rem;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-.admin_container .error {
-  color: #ff4820;
 }
