@@ -8,6 +8,7 @@ const webpackConfig = {
   output: {
     filename: "[name].js",
   },
+  target: 'node',
   module: {
     rules: [
       {
